@@ -8,4 +8,5 @@ The WebRTC Kiosk use a API only connection utilis it enters a Pexip conference. 
 
 Additional Work: 
 1. A call timer could be implemented to provide automatic call disconnect after a set interval (e.g. 60 minutes)
-2. Sometimes the mobile remote browser needs to be refreshed (page swipe) after re-visiting same page.
+2. Sometimes the mobile remote browser needs to be refreshed (page swipe) after re-visiting same page
+3. Add device selection capability (although wanted to keep it simple so have avoided)
