@@ -14,3 +14,4 @@ Additional Work:
 1. A call timer could be implemented to provide automatic call disconnect after a set interval (e.g. 60 minutes)
 2. Sometimes the mobile remote browser needs to be refreshed (page swipe) after re-visiting same page
 3. Add device selection capability (although wanted to keep it simple so have avoided)
+4. Local call controls can be eaily added to kiosk (however wanted to keep UI-less to avoid users putting fingers on screens etc)
