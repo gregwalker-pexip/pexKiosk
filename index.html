@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <title>Pexip Video Kiosk Demo</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+
+  </head>
+  <body>
+    <script src="https://pexipdemo.com/static/webrtc/js/pexrtc.js"></script>
+
+   
+    <div id="parent" class="parent">
+      
+        <div id="nameBlock" class="nameBlock" >
+          <h2 class="deviceName" id="deviceName">&#8203;</h2>
+          <h3 class="descriptionName" id="descriptionName">&#8203;</h3>
+        </div> 
+     
+
+      <div class="logoBlock"> 
+          <img class= "logo" src="./assets/media/bank_logo.png" alt="">
+      </div>
+
+      <div id="homeBlock" class="homeBlock rotator-wrapper">
+        <h2 class="homeTitle1">Speak to us about
+          <span class="rotator">
+          <span>Home Mortgages</span>
+          <span>Investing</span>
+          <span>Insurance</span>
+          <span>Term Deposits</span>
+          <span>Personal Loans</span>
+          <span style="color: #59ECF3;">Pexip Video Innovation</span>
+        </span></h2>
+        </div>
+
+        <div hidden id="lds-hourglass" class="lds-hourglass"></div>
+
+      <div class="videoBlock"><video id="farEndVideo" class="mainVideo" autoplay poster="./assets/media/transparent.png"></video></div>
+      <div class="selfBlock"><video id="selfViewVideo" class="selfVideo" autoplay muted poster="./assets/media/transparent.png"></video></div>
+
+      <div class="div3"> 
+        <div class="clockBlock" id="clockBlock">
+          <h2 class="time" id="time">&#8203;</h2>
+          <h3 class="date" id="date">&#8203;</h3>
+        </div>
+      </div>
+
+      <div id="muteBlock" class="muteBlock">
+      <img hidden id="muteIcon" class="muteIcon" src="assets/media/mutedIcon.png" alt="">
+      <div>
+
+      <div hidden id="debugBlock" class="debugBlock info"><small>
+        <p id="aliasName">Alias Name:</p>
+        <p id="infoPanel0">Maximum Call Rate:</p>
+        <p id="infoPanel1">Participant Info:</p>
+        <p id="infoPanel2">Conference Info:</p>
+        <p id="infoPanel3">Layout Info:</p>
+        <p id="infoPanel4">Media Info:</p>
+
+        <button type ="button" class="button blueButton" onclick="saveSettings()">Save Settings</button>
+        <button type ="button" class="button redButton" onclick="clearSettings()">Clear Settings</button>
+      
+        <select name="audioDevices" id="audioDevices"></select>
+        <select id="videoDevices" ></select>
+
+        <button id="preflightButton" class="button orangeButton" onclick="preflight()">Refresh</button>
+        <button type ="button" class="button blueButton" onclick="saveMediaSettings()">Set</button>
+
+    <button id="connectButton" class="button">Connect</button>
+    <button id="disconnectButton" class="button redButton">Disconnect</button>
+    <button class="button" onclick="pexRTC.muteAudio(true)">Mute Audio</button>
+    <button class="button" onclick="pexRTC.muteAudio(false)">Unmute Audio</button>
+    <button class="button" onclick="pexRTC.muteVideo(true)">Mute Video</button>
+    <button class="button" onclick="pexRTC.muteVideo(false)">Unmute Video</button>
+     
+      </div>
+
+      <div class="qrBlock">
+        <img class="remoteQR" id="remoteQR" loading="lazy" src="" alt="" width="120">
+      </div>
+
+      <div id="infoBlock" class="infoBlock">
+        <h4 class="infoTitle" id="infoTitle">Scan QR code or click Connect to meet an advisor over secure video</h4>
+        <div class="buttonControl">
+        <button id="connectButton" class="button" onclick="transferSelf()">Connect</button>
+        <button  id="muteButton" class="button" onclick="">Mute</button>
+        <button  id="endCallButton" class="button">End Call</button>
+        </div>
+        
+      </div>
+
+      </div>
+   
+
+
+	<script src="script.js"></script>
+  <script src="utils.js"></script>
+  </body>
+</html>

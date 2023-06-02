@@ -1,0 +1,403 @@
+html {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.6)
+    ),
+    url(./assets/media/background100.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+}
+
+body {
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden; /* Hide scrollbars */
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 8fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nameBlock {
+  grid-area: 1 / 1 / 2 / 2;
+  margin: 0px;
+  padding: 0px;
+}
+.homeBlock {
+  grid-area: 1 / 3 / 5 / 4;
+  margin: 0px;
+  padding: 0px;
+}
+.div3 {
+  grid-area: 1 / 5 / 2 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.lds-hourglass {
+  grid-area: 2 / 3 / 5 / 4;
+  margin: 0px;
+  padding: 0px;
+}
+.selfBlock {
+  grid-area: 1 / 5 / 2 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.videoBlock {
+  grid-area: 1 / 1 / 6 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.debugBlock {
+  grid-area: 1 / 1 / 6 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.div7 {
+  grid-area: 5 / 5 / 6 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.infoBlock {
+  grid-area: 4 / 1 / 6 / 6;
+  margin: 0px;
+  padding: 0px;
+}
+.muteBlock {
+  grid-area: 4 / 1 / 5 / 2;
+  margin: 0px;
+  padding: 0px;
+}
+
+.mainVideo {
+  width: 100%;
+}
+.selfVideo {
+  width: 100%;
+}
+
+input {
+  background-color: lightyellow;
+  border-radius: 5px;
+  font-size: 18px;
+  align-items: center;
+}
+
+input.checkbox {
+  width: 18px;
+  height: 18px;
+  align-items: center;
+}
+
+select {
+  background-color: lightyellow;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.button {
+  border-radius: 10px;
+  font-size: 24px;
+  padding: 10px;
+  margin-right: 10px;
+  opacity: 0.6;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.button:hover {
+  opacity: 1;
+  color: white;
+}
+
+.buttonControl {
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #ffe74c;
+  text-align: center;
+  color: #ffe74c;
+  transform: translate(-50%);
+  position: absolute;
+  left: 50%;
+}
+
+#connectButton {
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #ffe74c;
+  color: #ffe74c;
+}
+
+#muteButton {
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: dodgerblue;
+  color: dodgerblue;
+}
+
+#endCallButton {
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: orangered;
+  color: orangered;
+}
+
+.info {
+  font-weight: 300;
+  border: 1px solid lightslategray;
+  padding: 10px;
+  margin: 10px;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.clockBlock {
+  text-align: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 1;
+}
+
+.clockBlock .time {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+}
+
+.clockBlock .date {
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nameBlock {
+  text-align: left;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 1;
+}
+
+.nameBlock .deviceName {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nameBlock .descriptionName {
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nameBlock .descriptionNotes {
+  font-weight: 300;
+  margin: 0px;
+  padding: 0px;
+}
+
+.div6 {
+  text-align: right;
+  font-weight: 300;
+  margin: 20px;
+  padding: 20px;
+}
+
+.qrBlock {
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.remoteQR {
+  border: 2px solid white;
+  opacity: 0.5;
+  width: 100px;
+}
+
+.logoBlock {
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%);
+  margin: 0px;
+  padding: 0px;
+}
+
+.logo {
+  height: 30px;
+  opacity: 1;
+}
+
+.homeBlock {
+  font-size: 24px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  margin: 0px;
+  padding: 0px;
+}
+
+.homeTitle1 {
+  font-weight: bold;
+  font-weight: 600;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+.infoTitle {
+  font-weight: 300;
+  font-size: 20px;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+}
+
+.muteIcon {
+  width: 50px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  opacity: 0.8;
+}
+
+.videoBlock .farEndVideo {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
+.selfViewVideo {
+  width: 40%;
+}
+
+.rotator-wrapper {
+}
+.rotator-wrapper span {
+  display: inline-block;
+  min-width: 155px;
+  text-align: left;
+  white-space: nowrap;
+}
+.rotator-wrapper span span {
+  position: absolute;
+  font-weight: bold;
+  white-space: nowrap;
+  top: -0px;
+  opacity: 0;
+  animation: rotateWord 15s linear infinite 0s;
+  color: #ffe74c;
+}
+.rotator-wrapper span span:nth-child(2) {
+  animation-delay: 2.5s;
+}
+.rotator-wrapper span span:nth-child(3) {
+  animation-delay: 5s;
+}
+.rotator-wrapper span span:nth-child(4) {
+  animation-delay: 7.5s;
+}
+.rotator-wrapper span span:nth-child(5) {
+  animation-delay: 10s;
+}
+.rotator-wrapper span span:nth-child(6) {
+  animation-delay: 12.5s;
+}
+@keyframes rotateWord {
+  0% {
+    opacity: 0;
+  }
+  2% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  5% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  20% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.lds-hourglass {
+  width: 80px;
+  height: 80px;
+  opacity: 0.9;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  margin: 0px;
+  padding: 0px;
+  color: #ffe74c;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid #ffe74c;
+  border-color: #ffe74c transparent #ffe74c transparent;
+  animation: lds-hourglass 1s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}

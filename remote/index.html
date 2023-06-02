@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <title>Pexip Kiosk Remote</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      .swipeDo {
+        color: yellow;
+      }
+
+      .button {
+        width: 100%;
+        font-weight: 600;
+        background-color: #007791;
+        color: white;
+        font-size: 24px;
+        margin: 0px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding: 24px;
+        border-radius: 12px;
+        border-color: white;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+      }
+
+      .remoteLogo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      color: white;
+      background: #29465b;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    "
+  >
+    <script src="https://pexipdemo.com/static/webrtc/js/pexrtc.js"></script>
+
+    <img class="remoteLogo" src="../assets/media/bank_logo.png" alt="" />
+
+    <hr />
+    <h2 style="text-align: center; font-weight: 400">
+      Connect with a Banking Specialist Demo
+    </h2>
+
+    <button
+      id="advisorConnect"
+      class="button"
+      style="background-color: #007fff"
+      onclick="connectAddvisor()"
+    >
+      START KIOSK VIDEO CALL
+    </button>
+    <button
+      hidden
+      id="muteRemote"
+      class="button"
+      style="background-color: #007fff"
+      onclick="pexRTC.setParticipantMute(uuid, !muteStatus)"
+    >
+      MUTE MICROPHONE
+    </button>
+
+    <button
+      hidden
+      id="disconnectRemote"
+      style="background-color: red"
+      class="button"
+      onclick="disconnectKiosk()"
+    >
+      END CALL
+    </button>
+    <p
+      id="swipeDo"
+      class="swipeDo"
+      style="text-align: center; font-weight: 300"
+    >
+      Please swipe down to refresh
+    </p>
+
+    <p id="info" style="font-weight: 300; text-align: center">
+      Demo application powered by Pexip
+    </p>
+    <br />
+
+    <script>
+      let pexRTC = new PexRTC();
+
+      let info = document.getElementById("info");
+      let urlParams = new URLSearchParams(window.location.search);
+      let searchString = urlParams.get("u");
+      let uuid = searchString.slice(0, searchString.indexOf("-a="));
+
+      let participantName = searchString.slice(searchString.indexOf("-a=") + 3);
+      let muteStatus = false;
+      console.log("UUID | Name:", uuid, participantName);
+
+      //Some Global Variables
+
+      let call_type = "none"; // Set to "none" via a api only call
+      let pinStatus = ""; // You will need to build PIN dialogs if using user based PINs
+      let pin = "1234";
+      let server = "au.pexipdemo.com";
+      let conference = "pexKiosk";
+      let callAlias = participantName + "-R";
+      let bandwidth = 0;
+      let callTag = "Pexip Kiosk Remote";
+
+      let transferLocation = "pextv";
+
+      let advisorConnect = document.getElementById("advisorConnect");
+      let disconnectRemote = document.getElementById("disconnectRemote");
+      let muteRemote = document.getElementById("muteRemote");
+
+      let videoDeviceId;
+      let audioDeviceId;
+
+      const constraints = {
+        audio: false,
+      };
+
+      function connect() {
+        pexRTC.makeCall(server, conference, callAlias, bandwidth, call_type);
+      }
+
+      function preflight() {
+        // Run the async function
+        //getMediaDevices(constraints);
+        //pexRTC.video_source = videoDeviceId;
+        //pexRTC.audio_source = audioDeviceId;
+        // Renegotiate the media only
+        //pexRTC.renegotiate(false);
+      }
+
+      async function getMediaDevices(constraints) {
+        // Request permission to list devices
+        mediaDevices = await navigator.mediaDevices.getUserMedia(constraints);
+        // Enumerate the devices
+        let devices = await navigator.mediaDevices.enumerateDevices();
+      }
+
+      // Runs Pexip listners when the page loads
+      window.addEventListener("load", function (e) {
+        // Link the callSetup method to the onSetup callback
+        pexRTC.onSetup = callSetup;
+        // Link the callConnected method to the onConnect callback
+        pexRTC.onConnect = callConnected;
+        // Link the callDisconnected method to the onError callback
+        pexRTC.onError = callDisconnected;
+        // Link the callDisconnected method to the onDisconnect callback
+        pexRTC.onDisconnect = callDisconnected;
+        // Link the callDisconnected method to the onError callback
+        pexRTC.onError = callError;
+        // Link the Roster List callback
+        pexRTC.onRosterList = rosterList;
+      });
+
+      function disconnect() {
+        console.log("Ending the call...");
+        pexRTC.disconnect();
+      }
+
+      // This pexRTC method is called when the call is setting up
+      function callSetup(stream, pinStatus) {
+        console.log("PIN status:", pinStatus);
+        // If no pin is required, connect to the call with no pin
+        if (pinStatus === "none") {
+          // Connect to the call without a pin
+          pexRTC.connect();
+        } else {
+          // The pin is optional
+          if (pinStatus === "optional") {
+            // Set the title of the pin entry to reflect its requirement
+            console.log("PIN is optional:", "using PIN");
+            pexRTC.connect(pin);
+          } else {
+            // Set the title of the pin entry to reflect its requirement
+            console.log("PIN is required:", "using PIN");
+            pexRTC.connect(pin);
+          }
+          // Show the pin popup
+        }
+
+        if (stream) {
+          // Set the selfview video window's source to the stream
+          selfViewVideo.srcObject = stream;
+        }
+      }
+
+      function callConnected(stream) {
+        // Clear the pin, else may be cached for the next call
+        pexRTC.pin = null;
+      }
+
+      function callDisconnected(reason) {
+        console.log("callDisconnected:", reason);
+      }
+
+      function callError(reason) {
+        console.log("callError:", reason);
+      }
+
+      function connectAddvisor() {
+        pexRTC.transferParticipant(uuid, transferLocation);
+        console.log("Transfer-> ", uuid, transferLocation);
+        disconnect();
+        console.log("-- Goodbye --");
+        advisorConnect.style.backgroundColor = "limegreen";
+        advisorConnect.innerHTML = "CONNECTING...";
+        advisorConnect.disabled = true;
+
+        conference = transferLocation;
+
+        setTimeout(() => {
+          connect();
+          advisorConnect.style.display = "none";
+          muteRemote.style.display = "block";
+          disconnectRemote.style.display = "block";
+        }, 3000);
+
+        // window.location.href = "https://www.pexip.com/";
+      }
+
+      let targetParticipantName;
+      let targetParticipantCallTag;
+
+      //On Roster List (Full list)
+      function rosterList(roster) {
+        rosterList = roster;
+        console.log("🍏 Roster Update:", roster);
+        for (let item of roster) {
+          if (item.uuid === uuid && item.display_name === participantName) {
+            console.log(
+              "🟩 UUID Match!",
+              uuid,
+              " | ",
+              participantName,
+              " | ",
+              item.call_tag,
+              " | ",
+              item.local_alias
+            );
+            if (item.is_muted === "YES") {
+              muteRemote.style.backgroundColor = "red";
+              muteStatus = true;
+              muteRemote.innerHTML = "UNMUTE MICROPHONE";
+            } else {
+              muteRemote.style.backgroundColor = "#007fff";
+              muteStatus = false;
+              muteRemote.innerHTML = "MUTE MICROPHONE";
+            }
+          }
+
+          if (item.uuid != uuid && item.display_name === participantName) {
+            console.log(
+              "🟩🟩 Transfer Match",
+              uuid,
+              " | ",
+              participantName,
+              " | ",
+              item.call_tag,
+              " | ",
+              item.local_alias
+            );
+            uuid = item.uuid;
+            console.log("🟩🟩🟩 Setting new UUID:", uuid);
+            uuid = item.uuid;
+          }
+        }
+      }
+
+      //Disconnect the call if the browser tab is closed
+      window.addEventListener("beforeunload", function (e) {
+        pexRTC.disconnect();
+      });
+
+      window.onload = function () {
+        if (!window.location.hash) {
+          window.location = window.location + "#loaded";
+          window.location.reload(true);
+        }
+      };
+
+      document.addEventListener("visibilitychange", checkTabFocused);
+
+      function checkTabFocused() {
+        if (document.visibilityState === "visible") {
+          //console.log("Browser tab has focus");
+        } else {
+          //console.log("Browser tab does NOT have focus");
+          disconnect();
+        }
+      }
+
+      function disconnectKiosk() {
+        pexRTC.disconnectParticipant(uuid);
+          advisorConnect.disabled = true;
+          advisorConnect.style.display = "block";
+          advisorConnect.style.backgroundColor = "orangered";
+          advisorConnect.innerHTML = "ENDING CALL...";
+          muteRemote.style.display = "none";
+          disconnectRemote.style.display = "none";
+
+        setTimeout(() => {
+          disconnect();
+        
+          advisorConnect.innerHTML = "THE CALL HAS ENDED";
+
+
+        }, 2000);
+      }
+
+      preflight();
+      connect();
+    </script>
+  </body>
+</html>
