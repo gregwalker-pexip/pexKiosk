@@ -12,7 +12,7 @@ let maxCallDuration = "86400"; // Not implemented!!!!!!!
 let transferLocation = "pextv";  // From Mobile Remote
 
 // Configure Default Settings
-let server = "au.pexipdemo.com";
+let server = "pex-server.com";
 let conference = "pexkiosk";
 let callAlias =
   "pexK-" + Math.random().toString(36).substring(2, 10).toUpperCase(); //Randomise the alias name for uniqueness
